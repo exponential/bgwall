@@ -33,7 +33,9 @@ OTHER NOTES:
   you'll know you've made major changes to your wallpaper
   directory. This allows the script to be ran from terminal
   without a massive wait on when you have access to your
-  prompt again.
+  prompt again. It would be good to note that if the
+  switch is made to use "rm -rf", the fork would then not
+  be necessary.
   
 - LEGAL: This is open source. Feel free to change it 
   however you wish. Distribute it where ever you want. I 
