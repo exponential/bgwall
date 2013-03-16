@@ -1,0 +1,87 @@
+#!/usr/bin/perl -w
+$|++;
+
+use strict;
+use warnings;
+use Image::Magick;
+
+my @fext = ('.jpg','.jpeg','.png');
+my $path = '/home/subluser/Pictures/';
+my $thmbpath = '/home/subluser/.thmb/';
+my @tmplist;
+
+sub getlist{
+        my $DIR;
+        opendir(DIR, $path);
+        while (my $file = readdir(DIR)){
+	      next unless (-f "$path$file");
+	      next if ($file =~ m/^\./);
+	      next if ($file =~ m/^@fext/);
+	      push(@tmplist, $file);
+        }
+        closedir(DIR);
+        @tmplist = sort @tmplist;
+}
+
+sub make_thumbs(){
+        foreach my $name(@tmplist){
+                unless(-e "$thmbpath$name"){
+                        my $i = new Image::Magick;
+                        $i->Read("$path$name");
+                        $i->Resize(width => 32, height => 32);
+                        $i->write("$thmbpath$name");
+	      }
+        }
+}
+
+sub makeMenu(){
+        print "<openbox_pipe_menu>\n";
+        foreach my $name(@tmplist){
+	      my $tmp = $name;
+	      $tmp =~ s/\.jpg//ig;
+	      $tmp =~ s/\.jpeg//ig;
+	      $tmp =~ s/\.png//ig;
+	      $tmp =~ s/\./ /g;
+	      $tmp =~ s/\-/ /g;
+	      $tmp =~ s/\_/ /g;
+	      print "\t<item label=\"$tmp\" icon=\"$thmbpath$name\">\n";
+	      print "\t\t<action name=\"Execute\">\n";
+	      print "\t\t\t<execute> feh --bg-scale $path$name</execute>\n";
+	      print "\t\t</action>\n";
+	      print "\t</item>\n";
+        }
+        print "</openbox_pipe_menu>\n";
+        @tmplist = ();
+}
+
+sub clean(){
+        my $DIR;
+        opendir(DIR, $thmbpath);
+        while (my $file = readdir(DIR)){
+	      unless(-f "$path$file"){
+		    next if ($file =~ m/^\./);
+		    next if ($file =~ m/^@fext/);
+		    push(@tmplist, $file);
+	      }
+        }
+        closedir(DIR);
+        foreach my $name(@tmplist){
+	      $name =~ s/ /\\ /g;
+	      $name =~ s/\)/\\\)/g;
+	      $name =~ s/\(/\\\(/g;
+	      system("shred -f -u -z -n 1 $thmbpath$name");
+        }
+}
+
+
+getlist();
+make_thumbs();
+makeMenu();
+
+my $pid = fork();
+
+if(!$pid){
+      clean();
+}
+
+
