@@ -78,6 +78,7 @@ sub clean{
 	      $name =~ s/\)/\\\)/g;
 	      $name =~ s/\(/\\\(/g;
 	      system("shred -f -u -z -n 1 $thmbpath$name");
+	      #system("rm -rf $thmbpath$name");
         }
 }
 
