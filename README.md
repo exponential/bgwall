@@ -7,16 +7,16 @@ have installed by default.
 DEPENDENCIES:
 
 - PerlMagick
-          : sudo apt-get install perlmagick
-          : sudo cpan PerlMagick
-          : http://www.imagemagick.org/script/perl-magick.php
-          : http://search.cpan.org/dist/PerlMagick/
-          : Or whatever is easier for you.
+          * sudo apt-get install perlmagick
+          * sudo cpan PerlMagick
+          * http://www.imagemagick.org/script/perl-magick.php
+          * http://search.cpan.org/dist/PerlMagick/
+          * Or whatever is easier for you.
 
 - feh
-          : sudo apt-get install feh
-          : http://feh.finalrewind.org/
-          : Or whatever is easier for you.
+          * sudo apt-get install feh
+          * http://feh.finalrewind.org/
+          * Or whatever is easier for you.
 
 OTHER NOTES:
 
