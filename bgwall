@@ -9,20 +9,29 @@ my $path = "/home/$login/Pictures/";
 my $thmbpath = "/home/$login/.thmb/";
 my @tmplist;
 
-sub getlist{
-        my $DIR;
-        opendir(DIR, $path);
-        while (my $file = readdir(DIR)){
-	      next unless (-f "$path$file");
-	      next if ($file =~ m/^\./);
-	      next if ($file =~ m/^@fext/);
-	      push(@tmplist, $file);
-        }
-        closedir(DIR);
-        @tmplist = sort @tmplist;
+sub init{
+      unless(-e $path or mkdir $path){
+	  die("Wallpaper directory uncreatable.");
+      }
+      unless(-e $thmbpath or mkdir $thmbpath){
+	  die("Thumbnail directory uncreatable.")
+      }
 }
 
-sub make_thumbs(){
+sub getlist{
+      my $DIR;
+      opendir(DIR, $path);
+      while (my $file = readdir(DIR)){
+	  next unless (-f "$path$file");
+	  next if ($file =~ m/^\./);
+	  next if ($file =~ m/^@fext/);
+	  push(@tmplist, $file);
+      }
+      closedir(DIR);
+      @tmplist = sort @tmplist;
+}
+
+sub make_thumbs{
         foreach my $name(@tmplist){
                 unless(-e "$thmbpath$name"){
                         my $i = new Image::Magick;
@@ -33,7 +42,7 @@ sub make_thumbs(){
         }
 }
 
-sub makeMenu(){
+sub makeMenu{
         print "<openbox_pipe_menu>\n";
         foreach my $name(@tmplist){
 	      my $tmp = $name;
@@ -53,7 +62,7 @@ sub makeMenu(){
         @tmplist = ();
 }
 
-sub clean(){
+sub clean{
         my $DIR;
         opendir(DIR, $thmbpath);
         while (my $file = readdir(DIR)){
@@ -72,6 +81,7 @@ sub clean(){
         }
 }
 
+init();
 getlist();
 make_thumbs();
 makeMenu();
