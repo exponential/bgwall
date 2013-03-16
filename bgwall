@@ -87,6 +87,8 @@ getlist();
 make_thumbs();
 makeMenu();
 
+# If the code is switched to [rm -rf]
+# then the below is unneeded.
 my $pid = fork();
 if(!$pid){
       clean();
