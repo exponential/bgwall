@@ -4,8 +4,9 @@ use strict;
 use Image::Magick;
 
 my @fext = ('.jpg','.jpeg','.png');
-my $path = '/home/subluser/Pictures/';
-my $thmbpath = '/home/subluser/.thmb/';
+my $login = getlogin();
+my $path = "/home/$login/Pictures/";
+my $thmbpath = "/home/$login/.thmb/";
 my @tmplist;
 
 sub getlist{
@@ -71,15 +72,14 @@ sub clean(){
         }
 }
 
-
 getlist();
 make_thumbs();
 makeMenu();
 
 my $pid = fork();
-
 if(!$pid){
       clean();
+      exit;
 }
 
 
