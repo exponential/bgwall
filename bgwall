@@ -77,8 +77,8 @@ sub clean{
 	      $name =~ s/ /\\ /g;
 	      $name =~ s/\)/\\\)/g;
 	      $name =~ s/\(/\\\(/g;
-	      system("shred -f -u -z -n 1 $thmbpath$name");
-	      #system("rm -rf $thmbpath$name");
+	      #system("shred -f -u -z -n 1 $thmbpath$name");
+	      system("rm -rf $thmbpath$name");
         }
 }
 
@@ -87,12 +87,11 @@ getlist();
 make_thumbs();
 makeMenu();
 
-# If the code is switched to [rm -rf]
-# then the below is unneeded.
-my $pid = fork();
-if(!$pid){
-      clean();
-      exit;
-}
+# Uncomment if you switch to shred within clean()
+#my $pid = fork();
+#if(!$pid){
+#      clean();
+#      exit;
+#}
 
 
