@@ -23,14 +23,14 @@ INSTALLATION:
 -------------
 
 * From the terminal issue:
-
+<pre>
     chmod +x bgwall
     sudo mv bgwall /usr/bin/bgwall
-
+</pre>
 * Then within your menu.xml add:
-
+<pre>
     <menu execute="bgwall" id="walls" label="walls"/>
-
+</pre>
 
 OTHER NOTES:
 ------------
