@@ -29,7 +29,7 @@ INSTALLATION:
 </pre>
 * Then within your menu.xml add:
 <pre>
-    <menu execute="bgwall" id="walls" label="walls"/>
+    &ltmenu execute="bgwall" id="walls" label="walls"/&gt
 </pre>
 
 OTHER NOTES:
