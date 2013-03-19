@@ -35,9 +35,12 @@ sub make_thumbs{
         foreach my $name(@tmplist){
                 unless(-e "$thmbpath$name"){
                         my $i = new Image::Magick;
-                        $i->Read("$path$name");
-                        $i->Resize(width => 32, height => 32);
-                        $i->write("$thmbpath$name");
+                        unless($i->Read("$path$name")){
+			    system("rm -rf $path$name");
+		    }else{
+			$i->Resize(width => 32, height => 32);
+			$i->write("$thmbpath$name");
+		    }
 	      }
         }
 }
